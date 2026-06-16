@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>Muldoon — WordPress Domain Mapping Plugin, No Redirects</title>
+  <meta name="description" content="Muldoon is a WordPress plugin that maps extra domains and subdomains to any page, post, or archive — without redirects. The mapped domain always stays in the visitor's address bar.">
+  <meta name="keywords" content="WordPress domain mapping, map domain to WordPress page, domain alias WordPress, WordPress subdomain mapping, no redirect domain mapping, parked domain WordPress, WordPress multiple domains plugin">
+  <meta name="author" content="Jeff Caldwell">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0e1217">
+  <link rel="canonical" href="https://jeffcaldwellca.github.io/muldoon/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Muldoon">
+  <meta property="og:title" content="Muldoon — WordPress Domain Mapping Plugin, No Redirects">
+  <meta property="og:description" content="Point any extra domain or subdomain at a WordPress page, post, or archive — without redirects. The mapped domain always stays in the visitor's address bar.">
+  <meta property="og:url" content="https://jeffcaldwellca.github.io/muldoon/">
+  <meta property="og:image" content="https://jeffcaldwellca.github.io/muldoon/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Muldoon — The Multi Domain Name Mapper for WordPress">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Muldoon — WordPress Domain Mapping Plugin, No Redirects">
+  <meta name="twitter:description" content="Map extra domains and subdomains to any WordPress page, post, or archive — without redirects. The mapped domain stays in the address bar.">
+  <meta name="twitter:image" content="https://jeffcaldwellca.github.io/muldoon/og-image.png">
+  <meta name="twitter:image:alt" content="Muldoon — The Multi Domain Name Mapper for WordPress">
+
+  <!-- Icons -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured data: software application -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Muldoon",
+    "alternateName": "The Multi Domain Name Mapper",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "WordPress Plugin",
+    "operatingSystem": "WordPress 4.5+, PHP 7.4+",
+    "softwareVersion": "2.0",
+    "description": "WordPress plugin that points extra domains and subdomains at any page, post, or archive without redirects. The mapped domain always stays in the visitor's address bar.",
+    "url": "https://jeffcaldwellca.github.io/muldoon/",
+    "downloadUrl": "https://github.com/jeffcaldwellca/muldoon/releases/latest/download/muldoon.zip",
+    "softwareHelp": "https://jeffcaldwellca.github.io/muldoon/#install",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "image": "https://jeffcaldwellca.github.io/muldoon/og-image.png",
+    "author": { "@type": "Person", "name": "Jeff Caldwell" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+
+  <!-- Structured data: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does Muldoon use redirects or iframes?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Muldoon maps the domain transparently. Visitors see the mapped domain in the address bar while WordPress serves content from the underlying path — no redirect and no iframe." }
+      },
+      {
+        "@type": "Question",
+        "name": "What do I need to map a domain to WordPress?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Each additional domain's DNS A-record must point to the same IP as your main domain, and the domain must be routed to the same WordPress root directory (virtual host, domain alias, or parked domain)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Muldoon work with Yoast SEO and RankMath?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. XML sitemaps list the mapped domains, og:url is patched, and the canonical tag is rewritten to the mapped domain with no duplicate tag for both Yoast SEO and RankMath." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Muldoon work with page builders like Elementor?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, including Elementor. If a page builder fails to load mapped pages in the editor, enable Enhanced Compatibility Mode in the Settings tab." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Muldoon compatible with WordPress Multisite?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Multisite has built-in domain mapping. Muldoon targets single-site installations only." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Header -->
+  <header class="site-head" id="top">
+    <a class="brand" href="#top" aria-label="Muldoon home">
+      <svg class="brand-mark" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="#3a9ae0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="60" cy="60" r="33"/><ellipse cx="60" cy="60" rx="14" ry="33"/><line x1="27" y1="60" x2="93" y2="60"/>
+        </g>
+        <g fill="#e8edf2"><path d="M30,102 Q52,74 60,40 Q40,70 30,102 Z"/><path d="M46,108 Q70,72 92,22 Q62,68 46,108 Z"/><path d="M64,104 Q84,74 102,38 Q80,72 64,104 Z"/></g>
+      </svg>
+      <span class="brand-word">MULDOON</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+      <a class="ghlink" href="https://github.com/jeffcaldwellca/muldoon" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot"></span>WordPress · Domain mapping · v2.0</p>
+          <h1>
+            <span class="wordmark">MULDOON</span>
+            <span class="tagline">The Multi Domain Name Mapper</span>
+          </h1>
+          <p class="lede">
+            Point any extra domain or subdomain at a WordPress page, post, or archive
+            — <strong>without redirects</strong>. The mapped domain always stays in the
+            visitor's address bar.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://github.com/jeffcaldwellca/muldoon/releases/latest/download/muldoon.zip">
+              Download v2.0
+              <span class="btn-sub">muldoon.zip · free · GPLv3</span>
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/jeffcaldwellca/muldoon" rel="noopener">View on GitHub</a>
+          </div>
+          <ul class="hero-points">
+            <li>No redirect, no iframe</li>
+            <li>Yoast &amp; RankMath ready</li>
+            <li>Zero-migration upgrade</li>
+          </ul>
+        </div>
+
+        <!-- Signature visual: the address bar prop -->
+        <div class="hero-demo" role="img" aria-label="A browser address bar shows www.product-a.com while content is served transparently from www.mainsite.com/product-a/">
+          <div class="browser">
+            <div class="browser-bar">
+              <span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span>
+              <div class="url">
+                <svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5Zm3 8H9V6a3 3 0 0 1 6 0Z"/></svg>
+                <span class="url-text">www.product-a.com/</span>
+                <span class="caret" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="browser-body">
+              <span class="served-label">served transparently from</span>
+              <code class="served-path">www.mainsite.com/product-a/</code>
+              <div class="rake" aria-hidden="true">
+                <svg viewBox="0 0 120 60"><g fill="#e8a33d" opacity="0.9"><path d="M6,54 Q22,30 30,8 Q18,32 6,54 Z"/><path d="M20,56 Q40,26 56,4 Q34,32 20,56 Z"/><path d="M36,54 Q52,30 64,12 Q48,34 36,54 Z"/></g></svg>
+              </div>
+            </div>
+          </div>
+          <p class="demo-note">What the visitor sees · never changes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="band" id="how">
+      <div class="wrap">
+        <p class="kicker">How it works</p>
+        <h2>One mapping. Every descendant path follows.</h2>
+        <p class="section-lede">
+          Map a domain to a WordPress path and Muldoon handles the rest transparently.
+          Visitors see the mapped domain; WordPress serves content from the underlying
+          path; every internal link — navigation, pagination, archives — is rewritten to
+          the mapped domain.
+        </p>
+
+        <div class="maptable">
+          <div class="maptable-head">
+            <span>Visitor accesses</span>
+            <span>Served from</span>
+          </div>
+          <div class="maptable-row">
+            <code class="from">www.product-a.com/</code>
+            <code class="to">www.mainsite.com/product-a/</code>
+          </div>
+          <div class="maptable-row">
+            <code class="from">www.product-a.com/faq/</code>
+            <code class="to">www.mainsite.com/product-a/faq/</code>
+          </div>
+          <div class="maptable-row">
+            <code class="from">www.product-a.com/blog/hello/</code>
+            <code class="to">www.mainsite.com/product-a/blog/hello/</code>
+          </div>
+        </div>
+        <p class="fineprint">Handles <code>http</code>/<code>https</code> and <code>www</code>/non-<code>www</code> automatically — one entry per domain is enough.</p>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="band band-alt" id="features">
+      <div class="wrap">
+        <p class="kicker">Capabilities</p>
+        <h2>Everything you need to run a domain alias</h2>
+
+        <div class="cards">
+          <article class="card">
+            <h3>Core mapping</h3>
+            <ul class="ticks">
+              <li>Domain-stays-in-bar — no redirect, no iframe</li>
+              <li>Rewrites pages, posts, CPTs, archives, categories, feeds &amp; nav menus</li>
+              <li>Multiple mappings; all descendant URIs map automatically</li>
+              <li>Core, Yoast, &amp; RankMath XML sitemap compatibility</li>
+              <li>Elementor preview URL compatibility</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Per-mapping options</h3>
+            <ul class="ticks">
+              <li>Active / inactive toggle without deleting</li>
+              <li>301 redirect &amp; <code>noindex</code> on the original path</li>
+              <li>Pass-through for unmatched paths</li>
+              <li>Site name, tagline &amp; default OG image override</li>
+              <li>Custom <code>&lt;head&gt;</code> code, GA4 / GTM, live connection test</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>SEO</h3>
+            <ul class="ticks">
+              <li>Single canonical tag on the mapped domain</li>
+              <li>Yoast &amp; RankMath canonical rewriting — no duplicates</li>
+              <li><code>og:url</code> replacement for Yoast &amp; RankMath</li>
+              <li>Mapped-domain URLs in core, Yoast &amp; RankMath sitemaps</li>
+              <li>REST API domain replacement</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Administration</h3>
+            <ul class="ticks">
+              <li>Admin-bar badge for the active mapped domain</li>
+              <li>Import / export mappings as JSON</li>
+              <li>Drag-to-reorder mapping rows</li>
+              <li>Auto cache-flush: WP Super Cache, W3TC, WP Rocket, LiteSpeed, WP Engine</li>
+              <li>Developer hooks — <code>mdmap_appa_</code> / <code>mdmap_appf_</code></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section class="band" id="install">
+      <div class="wrap">
+        <p class="kicker">Get started</p>
+        <h2>Install in under a minute</h2>
+
+        <ol class="steps">
+          <li>
+            <span class="step-n">1</span>
+            <div>
+              <h3>Download the plugin</h3>
+              <p>Grab <a href="https://github.com/jeffcaldwellca/muldoon/releases/latest/download/muldoon.zip"><code>muldoon.zip</code></a> from the latest release.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-n">2</span>
+            <div>
+              <h3>Upload &amp; activate</h3>
+              <p>In WordPress: <strong>Plugins → Add New → Upload Plugin</strong>, choose the zip, install, and activate.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-n">3</span>
+            <div>
+              <h3>Add a mapping</h3>
+              <p>Open <strong>Tools → Muldoon</strong>, enter the additional domain on the left and the WordPress path on the right, and save.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="callout">
+          <strong>Before you configure:</strong> drop a <code>test.txt</code> in your WordPress root and confirm it loads from both
+          <code>yourmain.com/test.txt</code> and <code>youraddon.com/test.txt</code> without redirects.
+          On nginx, switch <strong>PHP Server-Variable</strong> to <code>HTTP_HOST</code> in the Settings tab.
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="band band-alt" id="faq">
+      <div class="wrap wrap-narrow">
+        <p class="kicker">Questions</p>
+        <h2>Frequently asked</h2>
+
+        <details>
+          <summary>Does Muldoon use redirects or iframes?</summary>
+          <p>No. Muldoon maps the domain transparently. Visitors see the mapped domain in the address bar while WordPress serves content from the underlying path — no redirect and no iframe.</p>
+        </details>
+        <details>
+          <summary>What do I need to map a domain to WordPress?</summary>
+          <p>Each additional domain's DNS A-record must point to the same IP as your main domain, and the domain must be routed to the same WordPress root directory (virtual host, domain alias, or parked domain).</p>
+        </details>
+        <details>
+          <summary>Does it work with Yoast SEO and RankMath?</summary>
+          <p>Yes. XML sitemaps list the mapped domains, <code>og:url</code> is patched, and the canonical is rewritten to the mapped domain with no duplicate tag for both Yoast SEO and RankMath.</p>
+        </details>
+        <details>
+          <summary>Does it work with page builders like Elementor?</summary>
+          <p>Yes, including Elementor. If a page builder fails to load mapped pages in the editor, enable Enhanced Compatibility Mode in the Settings tab.</p>
+        </details>
+        <details>
+          <summary>Is it compatible with WooCommerce or Multisite?</summary>
+          <p>WooCommerce is not reliably supported — it uses many non-standard link functions. Multisite is not supported either, since it has built-in domain mapping; Muldoon targets single-site installations.</p>
+        </details>
+        <details>
+          <summary>Will upgrading from MDMAP keep my mappings?</summary>
+          <p>Yes. The 2.0 rebrand changed user-facing names only. Internal identifiers are unchanged, so existing installs keep every saved mapping and setting with zero migration.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-band">
+      <div class="wrap">
+        <h2>Keep the domain in the bar.</h2>
+        <p>Free, GPLv3, and built for real WordPress sites.</p>
+        <div class="cta-row center">
+          <a class="btn btn-primary" href="https://github.com/jeffcaldwellca/muldoon/releases/latest/download/muldoon.zip">Download Muldoon 2.0</a>
+          <a class="btn btn-ghost" href="https://github.com/jeffcaldwellca/muldoon" rel="noopener">Star on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <svg class="brand-mark sm" viewBox="0 0 120 120" aria-hidden="true">
+          <g fill="none" stroke="#3a9ae0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="60" cy="60" r="33"/><ellipse cx="60" cy="60" rx="14" ry="33"/><line x1="27" y1="60" x2="93" y2="60"/></g>
+          <g fill="#e8edf2"><path d="M30,102 Q52,74 60,40 Q40,70 30,102 Z"/><path d="M46,108 Q70,72 92,22 Q62,68 46,108 Z"/><path d="M64,104 Q84,74 102,38 Q80,72 64,104 Z"/></g>
+        </svg>
+        <div>
+          <p class="foot-name">Muldoon</p>
+          <p class="foot-tag">The Multi Domain Name Mapper</p>
+        </div>
+      </div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="https://github.com/jeffcaldwellca/muldoon" rel="noopener">GitHub</a>
+        <a href="https://github.com/jeffcaldwellca/muldoon/releases/latest" rel="noopener">Releases</a>
+        <a href="https://github.com/jeffcaldwellca/muldoon/issues" rel="noopener">Issues</a>
+        <a href="https://www.gnu.org/licenses/gpl-3.0.html" rel="noopener">License (GPLv3)</a>
+      </nav>
+    </div>
+    <div class="wrap foot-base">
+      <span>© 2026 Jeff Caldwell · Released under GPLv3</span>
+      <span class="clever">Clever girl.</span>
+    </div>
+  </footer>
+</body>
+</html>
