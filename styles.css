@@ -270,6 +270,18 @@ h1 { margin: 0 0 22px; }
 }
 .ticks code { color: var(--blue-2); }
 
+/* Screenshot */
+.shot {
+  margin: 8px auto 0; max-width: 900px;
+  border: 1px solid var(--line); border-radius: var(--r); overflow: hidden;
+  background: #e4e9ee; box-shadow: 0 40px 80px -40px rgba(0,0,0,.7);
+}
+.shot-bar { display: flex; align-items: center; gap: 8px; padding: 11px 15px; background: #e4e9ee; border-bottom: 1px solid #d3dae1; }
+.shot-url { margin-left: 8px; font-family: var(--font-mono); font-size: 13px; color: #5a6573; background: #fff; border: 1px solid #ccd4dc; border-radius: 999px; padding: 5px 14px; }
+.shot-img { position: relative; max-height: 560px; overflow: hidden; background: #f0f0f1; }
+.shot-img img { display: block; width: 100%; height: auto; }
+.shot-img::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 96px; background: linear-gradient(transparent, rgba(240,240,241,.97)); pointer-events: none; }
+
 /* Steps */
 .steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 16px; max-width: 760px; }
 .steps li {
