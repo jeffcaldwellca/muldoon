@@ -97,7 +97,7 @@
       },
       {
         "@type": "Question",
-        "name": "Will upgrading from MDMAP keep my mappings?",
+        "name": "Will upgrading keep my existing mappings?",
         "acceptedAnswer": { "@type": "Answer", "text": "Yes. The 2.0 rebrand changed user-facing names only. Internal identifiers are unchanged, so existing installs keep every saved mapping and setting with zero migration." }
       }
     ]
@@ -179,7 +179,7 @@
               </div>
             </div>
           </div>
-          <p class="demo-note">What the visitor sees · never changes</p>
+          <p class="demo-note">The mapped domain stays put</p>
         </div>
       </div>
     </section>
@@ -222,13 +222,13 @@
     <section class="band band-alt" id="features">
       <div class="wrap">
         <p class="kicker">Capabilities</p>
-        <h2>Everything you need to run a domain alias</h2>
+        <h2>Everything you need to set up a domain alias</h2>
 
         <div class="cards">
           <article class="card">
             <h3>Core mapping</h3>
             <ul class="ticks">
-              <li>Domain-stays-in-bar, no redirect, no iframe</li>
+              <li>Domain stays in the address bar, no redirect, no iframe</li>
               <li>Rewrites pages, posts, CPTs, archives, categories, feeds &amp; nav menus</li>
               <li>Multiple mappings; all descendant URIs map automatically</li>
               <li>Core, Yoast, &amp; RankMath XML sitemap compatibility</li>
@@ -265,7 +265,7 @@
               <li>Import / export mappings as JSON</li>
               <li>Drag-to-reorder mapping rows</li>
               <li>Auto cache-flush: WP Super Cache, W3TC, WP Rocket, LiteSpeed, WP Engine</li>
-              <li>Developer hooks: <code>mdmap_appa_</code> / <code>mdmap_appf_</code></li>
+              <li>Developer hooks: <code>muldoon_action_</code> / <code>muldoon_filter_</code></li>
             </ul>
           </article>
         </div>
@@ -355,7 +355,7 @@
           <p>WooCommerce is not reliably supported; it uses many non-standard link functions. Multisite is not supported either, since it has built-in domain mapping; Muldoon targets single-site installations.</p>
         </details>
         <details>
-          <summary>Will upgrading from MDMAP keep my mappings?</summary>
+          <summary>Will upgrading keep my existing mappings?</summary>
           <p>Yes. The 2.0 rebrand changed user-facing names only. Internal identifiers are unchanged, so existing installs keep every saved mapping and setting with zero migration.</p>
         </details>
       </div>
@@ -364,8 +364,8 @@
     <!-- Final CTA -->
     <section class="cta-band">
       <div class="wrap">
-        <h2>Keep the domain in the bar.</h2>
-        <p>Free, GPLv3, and built for real WordPress sites.</p>
+        <h2>What visitors see never changes.</h2>
+        <p>Free, GPLv3, and open source.</p>
         <div class="cta-row center">
           <a class="btn btn-primary" href="https://github.com/jeffcaldwellca/muldoon/releases/latest/download/muldoon.zip">Download Muldoon 2.0</a>
           <a class="btn btn-ghost" href="https://github.com/jeffcaldwellca/muldoon" rel="noopener">Star on GitHub</a>
