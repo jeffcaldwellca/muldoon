@@ -70,7 +70,7 @@ The Muldoon admin screen at **Tools → Muldoon**, showing domain mappings and t
 ### Core mapping
 - Domain-stays-in-bar mapping, with no redirect and no iframe
 - Rewrites all standard WordPress permalink functions (pages, posts, CPTs, archives, categories, feeds, nav menus)
-- Keeps the home link and search-form action on the mapped domain while a visitor is browsing it (filterable via `mdmap_appf_rewrite_home_url`)
+- Keeps the home link and search-form action on the mapped domain while a visitor is browsing it (filterable via `muldoon_filter_rewrite_home_url`)
 - Handles `http`/`https` and `www`/`non-www` automatically, so one entry per domain is sufficient
 - Multiple mappings supported; all descendant URIs are mapped automatically
 - Core, Yoast SEO, and RankMath XML sitemap compatibility
@@ -115,23 +115,23 @@ The Muldoon admin screen at **Tools → Muldoon**, showing domain mappings and t
 
 ## Developer hooks
 
-All action hooks are prefixed `mdmap_appa_` and all filter hooks are prefixed `mdmap_appf_`. Search for those prefixes in the plugin source to see every available hook.
+All action hooks are prefixed `muldoon_action_` and all filter hooks are prefixed `muldoon_filter_`. Search for those prefixes in the plugin source to see every available hook.
 
 Key hooks:
 
 | Hook | Type | Description |
 |---|---|---|
-| `mdmap_appf_uri_match` | filter | Override or extend the URI matching logic |
-| `mdmap_appf_request_uri` | filter | Modify the rewritten `REQUEST_URI` |
-| `mdmap_appf_filtered_uri` | filter | Modify a replaced URI before it is returned |
-| `mdmap_appf_rewrite_home_url` | filter | Return `false` to stop rewriting `home_url()` to the mapped domain |
-| `mdmap_appf_save_mapping` | filter | Modify a single mapping before it is saved |
-| `mdmap_appf_save_mappings` | filter | Modify the full mappings array before it is saved |
-| `mdmap_appf_save_settings` | filter | Modify the settings array before it is saved |
-| `mdmap_appf_mapping_sort` | filter | Change the default sort key (`domain`) |
-| `mdmap_appf_mapping_class` | filter | Add CSS classes to mapping article elements |
-| `mdmap_appa_settings_tab` | action | Add content to the Settings tab |
-| `mdmap_appa_after_mapping_body` | action | Add fields to each mapping's advanced panel |
+| `muldoon_filter_uri_match` | filter | Override or extend the URI matching logic |
+| `muldoon_filter_request_uri` | filter | Modify the rewritten `REQUEST_URI` |
+| `muldoon_filter_filtered_uri` | filter | Modify a replaced URI before it is returned |
+| `muldoon_filter_rewrite_home_url` | filter | Return `false` to stop rewriting `home_url()` to the mapped domain |
+| `muldoon_filter_save_mapping` | filter | Modify a single mapping before it is saved |
+| `muldoon_filter_save_mappings` | filter | Modify the full mappings array before it is saved |
+| `muldoon_filter_save_settings` | filter | Modify the settings array before it is saved |
+| `muldoon_filter_mapping_sort` | filter | Change the default sort key (`domain`) |
+| `muldoon_filter_mapping_class` | filter | Add CSS classes to mapping article elements |
+| `muldoon_action_settings_tab` | action | Add content to the Settings tab |
+| `muldoon_action_after_mapping_body` | action | Add fields to each mapping's advanced panel |
 
 ---
 

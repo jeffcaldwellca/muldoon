@@ -127,9 +127,9 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 			//per-mapping robots.txt sitemap override
 			add_filter('robots_txt', array( $this, 'filter_robots_txt' ), 10, 2);
 			//ajax endpoints
-			add_action('wp_ajax_mdmap_health_check', array( $this, 'ajax_health_check' ));
-			add_action('wp_ajax_mdmap_export_mappings', array( $this, 'ajax_export_mappings' ));
-			add_action('wp_ajax_mdmap_import_mappings', array( $this, 'ajax_import_mappings' ));
+			add_action('wp_ajax_muldoon_health_check', array( $this, 'ajax_health_check' ));
+			add_action('wp_ajax_muldoon_export_mappings', array( $this, 'ajax_export_mappings' ));
+			add_action('wp_ajax_muldoon_import_mappings', array( $this, 'ajax_import_mappings' ));
 			//settings link on the plugins list row
 			add_filter('plugin_action_links_' . $this->pluginBasename, array( $this, 'add_settings_link' ));
 		  }
@@ -152,7 +152,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 		//only when we're on our own admin screen; otherwise the footer text is unchanged.
 		private static function footerEasterEggText($currentText, $screenId, $hookSuffix){
 			if( !empty($hookSuffix) && $screenId === $hookSuffix ){
-				return '<span class="mdmap_app_easter_egg">Clever girl.</span>';
+				return '<span class="muldoon_easter_egg">Clever girl.</span>';
 			}
 			return $currentText;
 		}
@@ -209,9 +209,9 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 		public function admin_scripts($hook){
 			if($hook !== $this->menuHookSuffix) return;
 			//custom assets
-			wp_enqueue_style( 'mdmap_app_adminstyle', plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->pluginVersion );
-			wp_register_script( 'mdmap_app_adminscript', plugin_dir_url( __FILE__ ) . 'assets/js/admin.js', array('jquery', 'jquery-ui-accordion', 'jquery-ui-sortable'), $this->pluginVersion, true );
-			wp_localize_script( 'mdmap_app_adminscript', 'localizedObj', array(
+			wp_enqueue_style( 'muldoon_adminstyle', plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->pluginVersion );
+			wp_register_script( 'muldoon_adminscript', plugin_dir_url( __FILE__ ) . 'assets/js/admin.js', array('jquery', 'jquery-ui-accordion', 'jquery-ui-sortable'), $this->pluginVersion, true );
+			wp_localize_script( 'muldoon_adminscript', 'localizedObj', array(
 				'removedMessage'  => esc_html__('This mapping will be deleted when you save. Click Undo to keep it.', 'muldoon'),
 				'undoMessage'     => esc_html__('Undo', 'muldoon'),
 				'dismissMessage'  => __( 'Dismiss this notice.', 'muldoon' ),
@@ -224,11 +224,11 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 				'importSuccess'   => esc_html__('Mappings imported! Reloading…', 'muldoon'),
 				'importError'     => esc_html__('Import failed. Please check the file and try again.', 'muldoon'),
 				'ajaxUrl'         => admin_url('admin-ajax.php'),
-				'healthNonce'     => wp_create_nonce('mdmap_health_check'),
-				'exportNonce'     => wp_create_nonce('mdmap_export'),
-				'importNonce'     => wp_create_nonce('mdmap_import'),
+				'healthNonce'     => wp_create_nonce('muldoon_health_check'),
+				'exportNonce'     => wp_create_nonce('muldoon_export'),
+				'importNonce'     => wp_create_nonce('muldoon_import'),
 			) );
-			wp_enqueue_script( 'mdmap_app_adminscript' );
+			wp_enqueue_script( 'muldoon_adminscript' );
 		}
 
 		//generate menu entry
@@ -268,26 +268,26 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 			);
 			$active_tab_name = isset($tab_labels[$active_tab]) ? $tab_labels[$active_tab] : ucfirst($active_tab);
 
-			echo '<div class="wrap mdmap_app_wrap">';
+			echo '<div class="wrap muldoon_wrap">';
 
 				//branded page header - raptor/claw mark + stacked wordmark (no separator)
-				echo '<div class="mdmap_app_brandhead">';
-					echo '<svg class="mdmap_app_logo" viewBox="0 0 120 120" aria-hidden="true" focusable="false">'
+				echo '<div class="muldoon_brandhead">';
+					echo '<svg class="muldoon_logo" viewBox="0 0 120 120" aria-hidden="true" focusable="false">'
 					   . '<g fill="none" stroke="#2271b1" stroke-width="3.5"><circle cx="60" cy="60" r="33"/><ellipse cx="60" cy="60" rx="14" ry="33"/><line x1="27" y1="60" x2="93" y2="60"/></g>'
 					   . '<g fill="#1d2327"><path d="M30,102 Q52,74 60,40 Q40,70 30,102 Z"/><path d="M46,108 Q70,72 92,22 Q62,68 46,108 Z"/><path d="M64,104 Q84,74 102,38 Q80,72 64,104 Z"/></g>'
 					   . '</svg>';
-					echo '<div class="mdmap_app_brandtext">';
+					echo '<div class="muldoon_brandtext">';
 						echo '<h1>' . esc_html__('Muldoon', 'muldoon') . '</h1>';
-						echo '<p class="mdmap_app_tagline">' . esc_html__('The Multi Domain Name Mapper', 'muldoon') . '</p>';
+						echo '<p class="muldoon_tagline">' . esc_html__('The Multi Domain Name Mapper', 'muldoon') . '</p>';
 					echo '</div>';
 				echo '</div>';
 
 				//updated notices
 				if ( isset( $_GET['settings-updated'] ) ) {
 					/* translators: %s: name of the active tab (Mappings, Settings, etc.). */
-					add_settings_error( 'mdmap_app_messages', 'mdmap_app_message', sprintf(esc_html__( '%s saved successfully', 'muldoon' ), esc_html($active_tab_name)), 'updated' );
+					add_settings_error( 'muldoon_messages', 'muldoon_message', sprintf(esc_html__( '%s saved successfully', 'muldoon' ), esc_html($active_tab_name)), 'updated' );
 				}
-				settings_errors( 'mdmap_app_messages' );
+				settings_errors( 'muldoon_messages' );
 
 				//page intro
 				echo '<p>' . esc_html__('Point any extra domain or subdomain at a page, post, or archive on this site, with no redirects. Visitors always see the mapped domain in their address bar. New here? Check the Help tab for setup instructions.', 'muldoon') . '</p>';
@@ -307,39 +307,39 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 					switch($active_tab){
 						case 'settings':{
 							add_settings_section(
-								'mdmap_app_section_settings',
+								'muldoon_section_settings',
 								esc_html__('Domain mapping settings', 'muldoon'),
 								array($this, 'section_settings_callback'),
 								$this->pluginBasename
 							);
 
 							add_settings_field(
-								'mdmap_app_field_settings_phpserver',
+								'muldoon_field_settings_phpserver',
 								esc_html__('PHP Server Variable:', 'muldoon'),
 								array($this, 'field_settings_phpserver_callback'),
 								$this->pluginBasename,
-								'mdmap_app_section_settings'
+								'muldoon_section_settings'
 							);
 
 							add_settings_field(
-								'mdmap_app_field_settings_compatibilitymode',
+								'muldoon_field_settings_compatibilitymode',
 								esc_html__('Compatibility mode:', 'muldoon'),
 								array($this, 'field_settings_compatibilitymode_callback'),
 								$this->pluginBasename,
-								'mdmap_app_section_settings'
+								'muldoon_section_settings'
 							);
 
 					add_settings_field(
-						'mdmap_app_field_settings_excluded_domains',
+						'muldoon_field_settings_excluded_domains',
 						esc_html__('Excluded domains:', 'muldoon'),
 						array($this, 'field_settings_excluded_domains_callback'),
 						$this->pluginBasename,
-						'mdmap_app_section_settings'
+						'muldoon_section_settings'
 					);
 
-							do_action('mdmap_appa_settings_tab');
+							do_action('muldoon_action_settings_tab');
 
-							settings_fields('mdmap_app_settings_group');
+							settings_fields('muldoon_settings_group');
 							do_settings_sections( $this->pluginBasename );
 							break 1;
 						}
@@ -347,8 +347,8 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 						echo '<h2>' . esc_html__('Developer Hooks', 'muldoon') . '</h2>';
 						echo '<p>' . esc_html__('Muldoon provides action and filter hooks for developers to extend its behaviour.', 'muldoon') . '</p>';
 						echo '<ul>';
-							echo '<li>' . esc_html__('Actions prefix:', 'muldoon') . ' <code>mdmap_appa_</code></li>';
-							echo '<li>' . esc_html__('Filters prefix:', 'muldoon') . ' <code>mdmap_appf_</code></li>';
+							echo '<li>' . esc_html__('Actions prefix:', 'muldoon') . ' <code>muldoon_action_</code></li>';
+							echo '<li>' . esc_html__('Filters prefix:', 'muldoon') . ' <code>muldoon_filter_</code></li>';
 						echo '</ul>';
 						echo '<p>' . esc_html__('Search for these prefixes in the plugin source to see all available hooks.', 'muldoon') . '</p>';
 						break 1;
@@ -367,20 +367,20 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 					default:{ //default is our mappings tab
 
 							add_settings_section(
-								'mdmap_app_section_mappings',
+								'muldoon_section_mappings',
 								esc_html__('Domain mappings', 'muldoon'),
 								array($this, 'section_mappings_callback'),
 								$this->pluginBasename
 							);
 
 							add_settings_field(
-								'mdmap_app_field_mappings_uris',
+								'muldoon_field_mappings_uris',
 								esc_html__('Your domain mappings:', 'muldoon'),
 								array($this, 'field_mappings_uris_callback'),
 								$this->pluginBasename,
-								'mdmap_app_section_mappings'
+								'muldoon_section_mappings'
 							);
-							settings_fields('mdmap_app_mappings_group');
+							settings_fields('muldoon_mappings_group');
 							do_settings_sections( $this->pluginBasename );
 
 							break 1;
@@ -390,8 +390,8 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 					//dynamic submit button, wrapped in a sticky action bar (status left, button right)
 					if($active_tab != 'help' && $active_tab != 'advanced'){
 						if($active_tab != 'mappings' || $this->saveMappingsButtonDisabled == false){
-							echo '<div class="mdmap_app_actionbar">';
-								echo '<span class="mdmap_app_save_status" aria-live="polite"></span>';
+							echo '<div class="muldoon_actionbar">';
+								echo '<span class="muldoon_save_status" aria-live="polite"></span>';
 								/* translators: %s: name of the active tab (Mappings, Settings, etc.). */
 								submit_button(sprintf(esc_html__('Save %s', 'muldoon'), $active_tab_name), 'primary', 'submit', false);
 							echo '</div>';
@@ -404,11 +404,11 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 
 		//register settings
 		private function register_settings(){
-			register_setting( 'mdmap_app_settings_group', 'mdmap_app_settings', array(
+			register_setting( 'muldoon_settings_group', 'mdmap_app_settings', array(
 				'sanitize_callback' => array($this, 'sanitize_settings_group'),
 				'show_in_rest' => false
 			) );
-			register_setting( 'mdmap_app_mappings_group', 'mdmap_app_mappings', array(
+			register_setting( 'muldoon_mappings_group', 'mdmap_app_mappings', array(
 				'sanitize_callback' => array($this, 'sanitize_mappings_group'),
 				'show_in_rest' => false
 			) );
@@ -462,20 +462,20 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 			$options = $this->getMappings();
 			if(empty($options)) $options = array();
 
-			echo '<section class="mdmap_app_mappings">';
+			echo '<section class="muldoon_mappings">';
 				$cnt = 0;
 				if(isset($options['mappings']) && !empty($options['mappings'])){
 					foreach($options['mappings'] as $mapping){
-						$mappingClass = 'mdmap_app_mapping' . ($this->isMappingEnabled($mapping) ? '' : ' mdmap_app_mapping_disabled');
-						echo '<article class="'. apply_filters( 'mdmap_appf_mapping_class', $mappingClass ) .'">';
-							echo '<div class="mdmap_app_mapping_header">';
-								echo '<div><div class="mdmap_app_input_wrap"><span class="mdmap_app_input_prefix">http[s]://</span><input type="text" name="mdmap_app_mappings[cnt_'.$cnt.'][domain]" value="' . esc_attr($mapping['domain']) . '" /></div></div>';
-								echo '<div class="mdmap_app_mapping_arrow">&raquo;</div>';
-								echo '<div><div class="mdmap_app_input_wrap"><span class="mdmap_app_input_prefix">'. esc_url(get_home_url()) .'</span><input type="text" name="mdmap_app_mappings[cnt_'.$cnt.'][path]" value="' . esc_attr($mapping['path']) . '" /></div></div>';
+						$mappingClass = 'muldoon_mapping' . ($this->isMappingEnabled($mapping) ? '' : ' muldoon_mapping_disabled');
+						echo '<article class="'. apply_filters( 'muldoon_filter_mapping_class', $mappingClass ) .'">';
+							echo '<div class="muldoon_mapping_header">';
+								echo '<div><div class="muldoon_input_wrap"><span class="muldoon_input_prefix">http[s]://</span><input type="text" name="mdmap_app_mappings[cnt_'.$cnt.'][domain]" value="' . esc_attr($mapping['domain']) . '" /></div></div>';
+								echo '<div class="muldoon_mapping_arrow">&raquo;</div>';
+								echo '<div><div class="muldoon_input_wrap"><span class="muldoon_input_prefix">'. esc_url(get_home_url()) .'</span><input type="text" name="mdmap_app_mappings[cnt_'.$cnt.'][path]" value="' . esc_attr($mapping['path']) . '" /></div></div>';
 							echo '</div>';
-							echo '<div class="mdmap_app_mapping_body">';
-								echo '<span class="mdmap_app_mapping_body_icon mdmap_app_delete_mapping"><a href="#" title="' . esc_html__('Remove this mapping', 'muldoon') . '">' . esc_html__('Remove', 'muldoon') . ' <i>&cross;</i></a></span>';
-								do_action('mdmap_appa_after_mapping_body', $cnt, $mapping);
+							echo '<div class="muldoon_mapping_body">';
+								echo '<span class="muldoon_mapping_body_icon muldoon_delete_mapping"><a href="#" title="' . esc_html__('Remove this mapping', 'muldoon') . '">' . esc_html__('Remove', 'muldoon') . ' <i>&cross;</i></a></span>';
+								do_action('muldoon_action_after_mapping_body', $cnt, $mapping);
 							echo '</div>';
 						echo '</article>';
 						$cnt++;
@@ -487,31 +487,31 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 			$numberOfSettings = 14; //domain, path, customheadcode, redirection, enabled (+hidden companion), noindex, passthrough, sitename, sitetagline, ogimage, ga4id, robotssitemap, sortorder
 			$atLimit = ($cnt >= ((intval(ini_get('max_input_vars')) - 100) / $numberOfSettings));
 
-			echo '<section class="mdmap_app_new_mapping">';
-				echo '<h3 class="mdmap_app_new_mapping_title">' . esc_html__('Add a new mapping', 'muldoon') . '</h3>';
-				echo '<article class="'. apply_filters( 'mdmap_appf_mapping_class', 'mdmap_app_mapping mdmap_app_mapping_new' ) .'">';
-					echo '<div class="mdmap_app_mapping_header">';
-						echo '<div><div class="mdmap_app_input_wrap"><span class="mdmap_app_input_prefix">http[s]://</span><input type="text" name="mdmap_app_mappings[cnt_new][domain]" placeholder="[www.]newdomain.com" /></div><div class="mdmap_app_input_hint">' . esc_html__('Enter the domain you want to map.', 'muldoon') . '</div></div>';
-						echo '<div class="mdmap_app_mapping_arrow">&raquo;</div>';
-						echo '<div><div class="mdmap_app_input_wrap"><span class="mdmap_app_input_prefix">'. esc_url(get_home_url()) .'</span><input type="text" name="mdmap_app_mappings[cnt_new][path]" placeholder="/mappedpage" /></div><div class="mdmap_app_input_hint">' . esc_html__('Enter the path to the desired root for this mapping', 'muldoon') . '</div></div>';
+			echo '<section class="muldoon_new_mapping">';
+				echo '<h3 class="muldoon_new_mapping_title">' . esc_html__('Add a new mapping', 'muldoon') . '</h3>';
+				echo '<article class="'. apply_filters( 'muldoon_filter_mapping_class', 'muldoon_mapping muldoon_mapping_new' ) .'">';
+					echo '<div class="muldoon_mapping_header">';
+						echo '<div><div class="muldoon_input_wrap"><span class="muldoon_input_prefix">http[s]://</span><input type="text" name="mdmap_app_mappings[cnt_new][domain]" placeholder="[www.]newdomain.com" /></div><div class="muldoon_input_hint">' . esc_html__('Enter the domain you want to map.', 'muldoon') . '</div></div>';
+						echo '<div class="muldoon_mapping_arrow">&raquo;</div>';
+						echo '<div><div class="muldoon_input_wrap"><span class="muldoon_input_prefix">'. esc_url(get_home_url()) .'</span><input type="text" name="mdmap_app_mappings[cnt_new][path]" placeholder="/mappedpage" /></div><div class="muldoon_input_hint">' . esc_html__('Enter the path to the desired root for this mapping', 'muldoon') . '</div></div>';
 					echo '</div>';
-					echo '<div class="mdmap_app_mapping_body">';
-						do_action('mdmap_appa_after_mapping_body', 'new', false);
+					echo '<div class="muldoon_mapping_body">';
+						do_action('muldoon_action_after_mapping_body', 'new', false);
 					echo '</div>';
 				echo '</article>';
 				//explicit add action - gives the blank row a clear call-to-action; it submits the form so the new row (and any pending edits) save together
 				if(!$atLimit){
-					echo '<p class="mdmap_app_add_mapping_row">';
-						submit_button(esc_html__('Add mapping', 'muldoon'), 'primary', 'mdmap_add_mapping', false);
-						echo '<span class="mdmap_app_add_mapping_hint">' . esc_html__('Fill in the domain and path above, then click Add mapping. Pending edits to other rows are saved at the same time.', 'muldoon') . '</span>';
+					echo '<p class="muldoon_add_mapping_row">';
+						submit_button(esc_html__('Add mapping', 'muldoon'), 'primary', 'muldoon_add_mapping', false);
+						echo '<span class="muldoon_add_mapping_hint">' . esc_html__('Fill in the domain and path above, then click Add mapping. Pending edits to other rows are saved at the same time.', 'muldoon') . '</span>';
 					echo '</p>';
 				}
 			echo '</section>';
 
-			echo '<div class="mdmap_app_io_toolbar">';
-				echo '<button type="button" id="mdmap_export_btn" class="button">' . esc_html__('Export Mappings', 'muldoon') . '</button>';
-				echo '<label for="mdmap_import_file" class="button">' . esc_html__('Import Mappings', 'muldoon') . '</label>';
-				echo '<input type="file" id="mdmap_import_file" accept=".json" style="display:none" />';
+			echo '<div class="muldoon_io_toolbar">';
+				echo '<button type="button" id="muldoon_export_btn" class="button">' . esc_html__('Export Mappings', 'muldoon') . '</button>';
+				echo '<label for="muldoon_import_file" class="button">' . esc_html__('Import Mappings', 'muldoon') . '</label>';
+				echo '<input type="file" id="muldoon_import_file" accept=".json" style="display:none" />';
 			echo '</div>';
 
 			//warn (and hide the Save button) only when genuinely near the server's max_input_vars ceiling
@@ -546,73 +546,73 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 
 			//enabled/disabled toggle - shown for all mappings including new
 			$isEnabled = ($isNew || !isset($mapping['enabled']) || intval($mapping['enabled']) !== 0);
-			echo '<div class="mdmap_app_mapping_additional_input mdmap_app_toggle_row">';
+			echo '<div class="muldoon_mapping_additional_input muldoon_toggle_row">';
 				//hidden companion so an unchecked box still submits a 0 - the checkbox value wins when checked
 				echo '<input type="hidden" name="mdmap_app_mappings[cnt_'.$cnt.'][enabled]" value="0" />';
-				echo '<label class="mdmap_app_toggle_label">';
+				echo '<label class="muldoon_toggle_label">';
 					echo '<input type="checkbox" name="mdmap_app_mappings[cnt_'.$cnt.'][enabled]" value="1" ' . checked($isEnabled, true, false) . ' />';
 					echo ' ' . esc_html__('Active', 'muldoon');
 				echo '</label>';
 				if(!$isNew){
-					echo '<button type="button" class="button button-small mdmap_app_health_btn" data-domain="' . esc_attr($mapping['domain']) . '">' . esc_html__('Test connection', 'muldoon') . '</button>';
-					echo '<span class="mdmap_app_health_result"></span>';
+					echo '<button type="button" class="button button-small muldoon_health_btn" data-domain="' . esc_attr($mapping['domain']) . '">' . esc_html__('Test connection', 'muldoon') . '</button>';
+					echo '<span class="muldoon_health_result"></span>';
 				}
 				echo '</div>';
 
 			//hidden field carrying this row's position; the admin JS renumbers these on drag-to-reorder.
 			//only existing rows participate in the sortable (the new row lives outside that container).
 			if(!$isNew){
-				echo '<input type="hidden" class="mdmap_app_sortorder" name="mdmap_app_mappings[cnt_'.$cnt.'][sortorder]" value="' . esc_attr($cnt) . '" />';
+				echo '<input type="hidden" class="muldoon_sortorder" name="mdmap_app_mappings[cnt_'.$cnt.'][sortorder]" value="' . esc_attr($cnt) . '" />';
 			}
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('Custom <head> code (this domain only)', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('Custom <head> code (this domain only)', 'muldoon') . '</p>';
 				echo '<textarea name="mdmap_app_mappings[cnt_'.$cnt.'][customheadcode]" placeholder="' . esc_attr__('e.g. <meta name="google-site-verification" content="…" />', 'muldoon') . '">' . esc_textarea(html_entity_decode($mapping['customheadcode'] ?? '')) . '</textarea>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('301 Redirect to mapped domain', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('301 Redirect to mapped domain', 'muldoon') . '</p>';
 				echo '<label><input type="checkbox" name="mdmap_app_mappings[cnt_'.$cnt.'][redirection]" value="301" ' . checked( !empty($mapping['redirection']), true, false ) . ' />' . esc_html__('Redirect visitors who arrive at the original path to this domain instead.', 'muldoon') . '</label>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('Noindex original URL', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('Noindex original URL', 'muldoon') . '</p>';
 				echo '<label><input type="checkbox" name="mdmap_app_mappings[cnt_'.$cnt.'][noindex]" value="1" ' . checked( !empty($mapping['noindex']), true, false ) . ' />' . esc_html__('Add a noindex tag to the original path so search engines index only the mapped domain.', 'muldoon') . '</label>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('Pass through unmatched paths', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('Pass through unmatched paths', 'muldoon') . '</p>';
 				echo '<label><input type="checkbox" name="mdmap_app_mappings[cnt_'.$cnt.'][passthrough]" value="1" ' . checked( !empty($mapping['passthrough']), true, false ) . ' />' . esc_html__('When a request on this domain doesn\'t resolve under the mapped path, serve the same path from the main site instead of 404.', 'muldoon') . '</label>';
 				echo '<p class="description">' . esc_html__('Useful when the alternate domain acts as a branded alias of the main site. Any public top-level page on the main site becomes reachable from this domain, so review before enabling on a site with private pages.', 'muldoon') . '</p>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('Site name (this domain only)', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('Site name (this domain only)', 'muldoon') . '</p>';
 				echo '<input type="text" class="regular-text" name="mdmap_app_mappings[cnt_'.$cnt.'][sitename]" value="' . esc_attr($mapping['sitename'] ?? '') . '" placeholder="' . esc_attr__('Leave empty to use the main site name', 'muldoon') . '" />';
 				echo '<p class="description">' . esc_html__('Replaces the site name in <title> tags, Open Graph site_name, RSS feeds, and SEO plugin output while visitors browse this mapped domain.', 'muldoon') . '</p>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('Site tagline (this domain only)', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('Site tagline (this domain only)', 'muldoon') . '</p>';
 				echo '<input type="text" class="regular-text" name="mdmap_app_mappings[cnt_'.$cnt.'][sitetagline]" value="' . esc_attr($mapping['sitetagline'] ?? '') . '" placeholder="' . esc_attr__('Leave empty to use the main site tagline', 'muldoon') . '" />';
 				/* translators: %sitedesc% is a Yoast/RankMath template variable shown to the user verbatim. */
 				echo '<p class="description">' . esc_html__('Replaces the site tagline (blogdescription) and Yoast/RankMath %sitedesc% expansions when visitors are on this mapped domain.', 'muldoon') . '</p>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('Default Open Graph image (this domain only)', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('Default Open Graph image (this domain only)', 'muldoon') . '</p>';
 				echo '<input type="text" class="regular-text" name="mdmap_app_mappings[cnt_'.$cnt.'][ogimage]" value="' . esc_attr($mapping['ogimage'] ?? '') . '" placeholder="https://example.com/share-card.jpg" />';
 				echo '<p class="description">' . esc_html__('Used as a fallback og:image / twitter:image when a page on this mapped domain has no specific share image set. Per-page Yoast/RankMath images still take precedence.', 'muldoon') . '</p>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('Analytics ID (GA4 or GTM, this domain only)', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('Analytics ID (GA4 or GTM, this domain only)', 'muldoon') . '</p>';
 				echo '<input type="text" class="regular-text" name="mdmap_app_mappings[cnt_'.$cnt.'][ga4id]" value="' . esc_attr($mapping['ga4id'] ?? '') . '" placeholder="G-XXXXXXXXXX" />';
 				echo '<p class="description">' . esc_html__('Injects a gtag.js snippet when visitors are browsing this mapped domain.', 'muldoon') . '</p>';
 			echo '</div>';
 
-			echo '<div class="mdmap_app_mapping_additional_input">';
-				echo '<p class="mdmap_app_mapping_additional_input_header">' . esc_html__('robots.txt Sitemap URL (this domain only)', 'muldoon') . '</p>';
+			echo '<div class="muldoon_mapping_additional_input">';
+				echo '<p class="muldoon_mapping_additional_input_header">' . esc_html__('robots.txt Sitemap URL (this domain only)', 'muldoon') . '</p>';
 				echo '<input type="text" class="regular-text" name="mdmap_app_mappings[cnt_'.$cnt.'][robotssitemap]" value="' . esc_attr($mapping['robotssitemap'] ?? '') . '" placeholder="https://example.com/sitemap.xml" />';
 				echo '<p class="description">' . esc_html__('Overrides the Sitemap: line in robots.txt while visitors browse this domain.', 'muldoon') . '</p>';
 			echo '</div>';
@@ -639,7 +639,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 				$options['excluded_domains'] = implode("\n", $clean);
 			}
 
-			return apply_filters( 'mdmap_appf_save_settings', $options );
+			return apply_filters( 'muldoon_filter_save_settings', $options );
 		}
 		public function sanitize_mappings_group($options){
 			//do nothing on empty input
@@ -679,7 +679,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 
 							//reject root path - mapping "/" would intercept all site traffic
 							if( $val['path'] === '/' ){
-								if(function_exists('add_settings_error')) add_settings_error( 'mdmap_app_messages', 'mdmap_app_error_code', esc_html__('Mapping to "/" is not allowed because it would intercept all site traffic.', 'muldoon'), 'error' );
+								if(function_exists('add_settings_error')) add_settings_error( 'muldoon_messages', 'muldoon_error_code', esc_html__('Mapping to "/" is not allowed because it would intercept all site traffic.', 'muldoon'), 'error' );
 								unset($options[$key]);
 								continue;
 							}
@@ -738,19 +738,19 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 							if($saveMapping){
 								//mapping should be saved and is filtered before
 								//use domain as index, so we do not have any duplicates -> this index will never be used or stored, but we convert it to md5 so it can not be confusing later
-								$mappings[md5($val['domain'])] = apply_filters('mdmap_appf_save_mapping', $val);
+								$mappings[md5($val['domain'])] = apply_filters('muldoon_filter_save_mapping', $val);
 							}else{
 								//check for existence, since this may be called in an upgrade process earlier, when this is not available yet
-								if(function_exists('add_settings_error')) add_settings_error( 'mdmap_app_messages', 'mdmap_app_error_code', esc_html__('At least one mapping with duplicate domain or path has been dropped.', 'muldoon'), 'error' );
+								if(function_exists('add_settings_error')) add_settings_error( 'muldoon_messages', 'muldoon_error_code', esc_html__('At least one mapping with duplicate domain or path has been dropped.', 'muldoon'), 'error' );
 							}
 						}else{
 							//check for existence, since this may be called in an upgrade process earlier, when this is not available yet
-							if(function_exists('add_settings_error')) add_settings_error( 'mdmap_app_messages', 'mdmap_app_error_code', esc_html__('One or more mappings had an invalid domain or path and were skipped.', 'muldoon'), 'error' );
+							if(function_exists('add_settings_error')) add_settings_error( 'muldoon_messages', 'muldoon_error_code', esc_html__('One or more mappings had an invalid domain or path and were skipped.', 'muldoon'), 'error' );
 						}
 					//if we have only one input filled
 					}else if(!(($val['domain'] ?? '') == '' && ($val['path'] ?? '') == '')){
 						//check for existence, since this may be called in an upgrade process earlier, when this is not available yet
-						if(function_exists('add_settings_error')) add_settings_error( 'mdmap_app_messages', 'mdmap_app_error_code', esc_html__('One or more mappings were skipped because both a domain and a path are required.', 'muldoon'), 'error' );
+						if(function_exists('add_settings_error')) add_settings_error( 'muldoon_messages', 'muldoon_error_code', esc_html__('One or more mappings were skipped because both a domain and a path are required.', 'muldoon'), 'error' );
 					}
 					//remove original mapping (cnt_) from options array
 					unset($options[$key]);
@@ -765,14 +765,14 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 			if($hasSortOrder){
 				usort($mappings, function($a, $b){ return intval($a['sortorder'] ?? 999) - intval($b['sortorder'] ?? 999); });
 			}else{
-				$sort_key = apply_filters('mdmap_appf_mapping_sort', 'domain');
+				$sort_key = apply_filters('muldoon_filter_mapping_sort', 'domain');
 				usort($mappings, function($a, $b) use ($sort_key) { return strcmp($a[$sort_key], $b[$sort_key]); });
 			}
 
 			//add filtered and sorted mappings to options array
 			if(!empty($mappings)) $options['mappings'] = $mappings;
 
-			return apply_filters( 'mdmap_appf_save_mappings', $options );
+			return apply_filters( 'muldoon_filter_save_mappings', $options );
 		}
 		//change the request, check for matching mappings
 		public function parse_request($do_parse, $instance, $extra_query_vars){
@@ -794,7 +794,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 					if(!$this->isMappingEnabled($mapping)) continue;
 					$matchCompare = $this->uriMatch($this->getCurrentURI(), $mapping, true);
 					//then enable custom matching by filtering
-					$matchCompare = apply_filters( 'mdmap_appf_uri_match', $matchCompare, $this->getCurrentURI(), $mapping, true );
+					$matchCompare = apply_filters( 'muldoon_filter_uri_match', $matchCompare, $this->getCurrentURI(), $mapping, true );
 
 					//if the current mapping fits better, use this instead the previous one
 					if($matchCompare !== false && isset($matchCompare['factor']) && $matchCompare['factor'] > $this->getCurrentMapping()['factor']){
@@ -807,7 +807,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 					//set request uri to our original mapping path AND if we have a longer query, we need to append it
 					$newRequestURI = trailingslashit($this->getCurrentMapping()['match']['path'] . substr($this->stripWww($this->getCurrentURI()), strlen($this->stripWww($this->getCurrentMapping()['match']['domain']))));
 					//enable additional filtering on the request_uri
-					$newRequestURI = apply_filters('mdmap_appf_request_uri', $newRequestURI, $this->getCurrentURI(), $this->getCurrentMapping());
+					$newRequestURI = apply_filters('muldoon_filter_request_uri', $newRequestURI, $this->getCurrentURI(), $this->getCurrentMapping());
 
 					//robots.txt: leave the request untouched so WP serves its virtual robots.txt
 					//(is_robots() stays true). currentMapping is still set, so filter_robots_txt()
@@ -1008,7 +1008,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 					//first use our standard matching function
 					$matchCompare = $this->uriMatch($originalURI, $mapping, false);
 					//then enable custom matching by filtering
-					$matchCompare = apply_filters( 'mdmap_appf_uri_match', $matchCompare, $originalURI, $mapping, false );
+					$matchCompare = apply_filters( 'muldoon_filter_uri_match', $matchCompare, $originalURI, $mapping, false );
 
 					//if the current mapping fits better, use this instead the previous one
 					if($matchCompare !== false && isset($matchCompare['factor']) && $matchCompare['factor'] > $bestMatch['factor']){
@@ -1020,7 +1020,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 				if(!empty($bestMatch['match'])){
 					$uriParsed = parse_url($originalURI);
 					$newURI = str_ireplace( trailingslashit( ($uriParsed['host'] ?? '') . $bestMatch['match']['path'] ), trailingslashit( $bestMatch['match']['domain'] ), $originalURI );
-					return apply_filters('mdmap_appf_filtered_uri', $newURI, $originalURI, $bestMatch);
+					return apply_filters('muldoon_filter_filtered_uri', $newURI, $originalURI, $bestMatch);
 				}
 			}
 
@@ -1033,7 +1033,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 			if(empty($this->getCurrentMapping()['match'])) return $url;
 			if(is_admin() || wp_doing_ajax() || wp_doing_cron() || (defined('REST_REQUEST') && REST_REQUEST) || is_feed()) return $url;
 			if($orig_scheme === 'rest') return $url; //leave the REST API base alone
-			if(!apply_filters('mdmap_appf_rewrite_home_url', true, $url, $path)) return $url;
+			if(!apply_filters('muldoon_filter_rewrite_home_url', true, $url, $path)) return $url;
 
 			//links that fall under a mapping's subtree are already handled by replace_uri
 			$mapped = $this->replace_uri($url);
@@ -1067,7 +1067,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 					$matchCompare = $this->uriMatch($mapped_uri, $mapping, true);
 
 					//then enable custom matching by filtering
-					$matchCompare = apply_filters( 'mdmap_appf_uri_match', $matchCompare, $mapped_uri, $mapping, true );
+					$matchCompare = apply_filters( 'muldoon_filter_uri_match', $matchCompare, $mapped_uri, $mapping, true );
 
 					//if the current mapping fits better, use this instead the previous one
 					if($matchCompare !== false && isset($matchCompare['factor']) && $matchCompare['factor'] > $bestMatch['factor']){
@@ -1079,7 +1079,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 				if(!empty($bestMatch['match'])){
 					$uriParsed = parse_url($mapped_uri);
 					$newURI = str_ireplace( ($uriParsed['host'] ?? ''), parse_url(get_home_url(), PHP_URL_HOST) . $bestMatch['match']['path'], $mapped_uri );
-					return apply_filters('mdmap_appf_filtered_uri', $newURI, $mapped_uri, $bestMatch);
+					return apply_filters('muldoon_filter_filtered_uri', $newURI, $mapped_uri, $bestMatch);
 				}
 			}
 
@@ -1167,7 +1167,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 
 		//hook into some of our own defined actions
 		public function hookMDMAction(){
-			add_action('mdmap_appa_after_mapping_body', array( $this, 'render_advanced_mapping_inputs'), 10, 2);
+			add_action('muldoon_action_after_mapping_body', array( $this, 'render_advanced_mapping_inputs'), 10, 2);
 		}
 		//check if custom head code is defined for this mapping and output it with html entities decoded, if so...
 		public function output_custom_head_code(){
@@ -1307,10 +1307,10 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 			if(empty($this->getCurrentMapping()['match'])) return;
 			$domain = $this->getCurrentMapping()['match']['domain'];
 			$wp_admin_bar->add_node(array(
-				'id'    => 'mdmap_app_badge',
+				'id'    => 'muldoon_badge',
 				'title' => '<span aria-hidden="true" style="color:#46b450;margin-right:4px">&#9679;</span>' . esc_html__('Mapped domain:', 'muldoon') . ' <strong>' . esc_html($domain) . '</strong>',
 				'href'  => false,
-				'meta'  => array('class' => 'mdmap_app_adminbar_badge'),
+				'meta'  => array('class' => 'muldoon_adminbar_badge'),
 			));
 		}
 
@@ -1422,7 +1422,7 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 
 		//health check: do a HEAD request to the mapped domain and return the HTTP status code
 		public function ajax_health_check(){
-			check_ajax_referer('mdmap_health_check', 'nonce');
+			check_ajax_referer('muldoon_health_check', 'nonce');
 			if(!current_user_can('manage_options')) wp_die(-1);
 			$domain = isset($_POST['domain']) ? sanitize_text_field(wp_unslash($_POST['domain'])) : '';
 			if(empty($domain)) wp_send_json_error(array('message' => esc_html__('No domain provided.', 'muldoon')));
@@ -1447,14 +1447,14 @@ if( !class_exists( 'MultipleDomainMapper' ) ){
 
 		//export: return current mappings as JSON
 		public function ajax_export_mappings(){
-			check_ajax_referer('mdmap_export', 'nonce');
+			check_ajax_referer('muldoon_export', 'nonce');
 			if(!current_user_can('manage_options')) wp_die(-1);
 			wp_send_json_success(array('mappings' => $this->getMappings()));
 		}
 
 		//import: accept JSON, merge with existing mappings through the sanitizer, save
 		public function ajax_import_mappings(){
-			check_ajax_referer('mdmap_import', 'nonce');
+			check_ajax_referer('muldoon_import', 'nonce');
 			if(!current_user_can('manage_options')) wp_die(-1);
 			$json = isset($_POST['data']) ? wp_unslash($_POST['data']) : '';
 			if(empty($json)) wp_send_json_error(array('message' => esc_html__('No data provided.', 'muldoon')));

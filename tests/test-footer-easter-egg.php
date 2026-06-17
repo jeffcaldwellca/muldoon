@@ -36,7 +36,7 @@ function check($label, $expected, $actual){
 }
 
 $original = 'Thank you for creating with WordPress';
-$eggHtml  = '<span class="mdmap_app_easter_egg">Clever girl.</span>';
+$eggHtml  = '<span class="muldoon_easter_egg">Clever girl.</span>';
 
 //on our own screen, the footer text becomes the easter egg
 check(

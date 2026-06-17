@@ -55,7 +55,7 @@ All descendant paths follow automatically, and `http`/`https` plus `www`/non-`ww
 
 = Developer hooks =
 
-All action hooks are prefixed `mdmap_appa_` and all filter hooks are prefixed `mdmap_appf_`. See the plugin source or the project website for the full list.
+All action hooks are prefixed `muldoon_action_` and all filter hooks are prefixed `muldoon_filter_`. See the plugin source or the project website for the full list.
 
 Project website and documentation: https://www.jeffcaldwell.ca/muldoon/
 

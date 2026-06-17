@@ -1,7 +1,7 @@
 /* ── Muldoon Domain Mapper - Admin Styles ────────────────────────── */
 
 /* Design tokens (scoped to plugin wrapper) */
-.mdmap_app_wrap {
+.muldoon_wrap {
   --mdm-blue:       #2271b1;
   --mdm-surface:    #ffffff;
   --mdm-bg:         #f6f7f7;
@@ -16,25 +16,25 @@
 }
 
 /* ── Branded page header ────────────────────────────────────────── */
-.mdmap_app_brandhead {
+.muldoon_brandhead {
   display: flex;
   align-items: center;
   gap: 14px;
   margin: 4px 0 14px;
 }
-.mdmap_app_brandhead .mdmap_app_logo {
+.muldoon_brandhead .muldoon_logo {
   width: 46px;
   height: 46px;
   flex: none;
 }
-.mdmap_app_brandhead h1 {
+.muldoon_brandhead h1 {
   margin: 0;
   padding: 0;
   font-size: 23px;
   line-height: 1.15;
   font-weight: 600;
 }
-.mdmap_app_brandhead .mdmap_app_tagline {
+.muldoon_brandhead .muldoon_tagline {
   margin: 2px 0 0;
   color: var(--mdm-muted);
   font-size: 12px;
@@ -43,13 +43,13 @@
 }
 
 /* ── Intro text ─────────────────────────────────────────────────── */
-.mdmap_app_wrap > p {
+.muldoon_wrap > p {
   color: var(--mdm-muted);
   max-width: 680px;
 }
 
 /* ── Mapping cards ──────────────────────────────────────────────── */
-.mdmap_app_mapping {
+.muldoon_mapping {
   margin-bottom: 8px;
   border-radius: var(--mdm-radius);
   background: var(--mdm-surface);
@@ -60,7 +60,7 @@
 }
 
 /* ── Accordion header ───────────────────────────────────────────── */
-.mdmap_app_mapping_header {
+.muldoon_mapping_header {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -71,19 +71,19 @@
   user-select: none;
 }
 
-.mdmap_app_mapping_header.ui-state-active {
+.muldoon_mapping_header.ui-state-active {
   background: var(--mdm-bg);
   border-bottom: 1px solid var(--mdm-border);
 }
 
 /* Chevron icon */
-.mdmap_app_mapping_header .ui-accordion-header-icon.ui-icon {
+.muldoon_mapping_header .ui-accordion-header-icon.ui-icon {
   text-indent: 0;
   flex-shrink: 0;
   overflow: visible;
 }
 
-.mdmap_app_mapping_header .ui-accordion-header-icon::before {
+.muldoon_mapping_header .ui-accordion-header-icon::before {
   content: '';
   display: block;
   width: 22px;
@@ -98,18 +98,18 @@
   transition: transform .2s ease, background-color .15s;
 }
 
-.mdmap_app_mapping_header.ui-state-active .ui-accordion-header-icon::before {
+.muldoon_mapping_header.ui-state-active .ui-accordion-header-icon::before {
   transform: rotate(90deg);
   background-color: #e0e0e0;
 }
 
 /* Input column flex */
-.mdmap_app_mapping_header > div:not(.mdmap_app_mapping_arrow) {
+.muldoon_mapping_header > div:not(.muldoon_mapping_arrow) {
   flex: 1 1 0;
   min-width: 0;
 }
 
-.mdmap_app_mapping_header > .mdmap_app_mapping_arrow {
+.muldoon_mapping_header > .muldoon_mapping_arrow {
   flex-shrink: 0;
   color: var(--mdm-muted);
   font-size: 1em;
@@ -117,7 +117,7 @@
 }
 
 /* ── Input group ────────────────────────────────────────────────── */
-.mdmap_app_input_wrap {
+.muldoon_input_wrap {
   display: flex;
   align-items: stretch;
   border: 1px solid var(--mdm-border);
@@ -127,12 +127,12 @@
   transition: border-color .15s, box-shadow .15s;
 }
 
-.mdmap_app_input_wrap:focus-within {
+.muldoon_input_wrap:focus-within {
   border-color: var(--mdm-blue);
   box-shadow: 0 0 0 1px var(--mdm-blue);
 }
 
-.mdmap_app_input_prefix {
+.muldoon_input_prefix {
   display: flex;
   align-items: center;
   padding: 5px 8px;
@@ -144,7 +144,7 @@
   line-height: 1.4;
 }
 
-.mdmap_app_input_wrap input {
+.muldoon_input_wrap input {
   flex: 1;
   min-width: 0;
   border: none;
@@ -157,7 +157,7 @@
   outline: none;
 }
 
-.mdmap_app_input_hint {
+.muldoon_input_hint {
   font-size: 11px;
   color: var(--mdm-muted);
   font-style: italic;
@@ -165,28 +165,28 @@
 }
 
 /* ── Mapping body (accordion panel) ────────────────────────────── */
-.mdmap_app_mapping_body {
+.muldoon_mapping_body {
   padding: 12px 14px;
   background: var(--mdm-bg);
 }
 
-.mdmap_app_mapping_body:empty {
+.muldoon_mapping_body:empty {
   display: none;
 }
 
-.mdmap_app_mapping_body::after {
+.muldoon_mapping_body::after {
   content: '';
   display: table;
   clear: both;
 }
 
 /* ── Delete button ──────────────────────────────────────────────── */
-.mdmap_app_mapping_body_icon {
+.muldoon_mapping_body_icon {
   float: right;
   margin: 0 0 8px 10px;
 }
 
-.mdmap_app_mapping_body_icon a {
+.muldoon_mapping_body_icon a {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -201,34 +201,34 @@
   line-height: 1.4;
 }
 
-.mdmap_app_mapping_body_icon a:hover {
+.muldoon_mapping_body_icon a:hover {
   color: var(--mdm-danger);
   background: var(--mdm-danger-bg);
   border-color: var(--mdm-danger);
 }
 
-.mdmap_app_mapping_body_icon i {
+.muldoon_mapping_body_icon i {
   font-style: normal;
   font-size: 15px;
   line-height: 1;
 }
 
 /* ── Advanced fields (head code, redirect) ──────────────────────── */
-.mdmap_app_mapping_additional_input {
+.muldoon_mapping_additional_input {
   clear: both;
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid var(--mdm-border);
 }
 
-.mdmap_app_mapping_additional_input_header {
+.muldoon_mapping_additional_input_header {
   font-size: 12px;
   font-weight: 600;
   color: var(--mdm-text);
   margin: 0 0 6px;
 }
 
-.mdmap_app_mapping_additional_input textarea {
+.muldoon_mapping_additional_input textarea {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid var(--mdm-border);
@@ -241,14 +241,14 @@
   transition: border-color .15s, box-shadow .15s;
 }
 
-.mdmap_app_mapping_additional_input textarea:focus {
+.muldoon_mapping_additional_input textarea:focus {
   border-color: var(--mdm-blue);
   box-shadow: 0 0 0 1px var(--mdm-blue);
   outline: none;
 }
 
 /* ── New mapping row ────────────────────────────────────────────── */
-.mdmap_app_new_mapping .mdmap_app_mapping {
+.muldoon_new_mapping .muldoon_mapping {
   border-style: dashed;
   border-color: var(--mdm-new-border);
   box-shadow: none;
@@ -256,11 +256,11 @@
 }
 
 /* "+" icon placeholder to visually align with accordion rows */
-.mdmap_app_new_mapping .mdmap_app_mapping_header {
+.muldoon_new_mapping .muldoon_mapping_header {
   cursor: default;
 }
 
-.mdmap_app_new_mapping .mdmap_app_mapping_header::before {
+.muldoon_new_mapping .muldoon_mapping_header::before {
   content: '+';
   flex-shrink: 0;
   width: 22px;
@@ -276,14 +276,14 @@
 }
 
 /* ── Add-new-mapping affordance ─────────────────────────────────── */
-.mdmap_app_new_mapping_title {
+.muldoon_new_mapping_title {
   font-size: 13px;
   font-weight: 600;
   color: var(--mdm-text);
   margin: 20px 0 8px;
 }
 
-.mdmap_app_add_mapping_row {
+.muldoon_add_mapping_row {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -291,24 +291,24 @@
   margin: 10px 0 0;
 }
 
-.mdmap_app_add_mapping_row .button {
+.muldoon_add_mapping_row .button {
   margin: 0;
 }
 
-.mdmap_app_add_mapping_hint {
+.muldoon_add_mapping_hint {
   font-size: 11px;
   color: var(--mdm-muted);
   font-style: italic;
 }
 
 /* ── Unsaved-changes hint ───────────────────────────────────────── */
-.mdmap_app_dirty_notice {
+.muldoon_dirty_notice {
   margin-left: 0;
   margin-right: 0;
 }
 
 /* ── Sticky save action bar ─────────────────────────────────────── */
-.mdmap_app_wrap .mdmap_app_actionbar {
+.muldoon_wrap .muldoon_actionbar {
   position: sticky;
   bottom: 0;
   z-index: 10;
@@ -324,20 +324,20 @@
   border-top: 1px solid var(--mdm-border);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.06);
 }
-.mdmap_app_actionbar .button {
+.muldoon_actionbar .button {
   margin: 0;
 }
-.mdmap_app_save_status {
+.muldoon_save_status {
   display: flex;
   align-items: center;
   gap: 7px;
   color: var(--mdm-muted);
   font-size: 13px;
 }
-.mdmap_app_save_status.is-dirty {
+.muldoon_save_status.is-dirty {
   color: #9a5500;
 }
-.mdmap_app_save_status.is-dirty::before {
+.muldoon_save_status.is-dirty::before {
   content: "";
   width: 8px;
   height: 8px;
@@ -346,15 +346,15 @@
 }
 
 /* ── Drag-to-reorder ────────────────────────────────────────────── */
-.mdmap_app_mappings .mdmap_app_mapping_header {
+.muldoon_mappings .muldoon_mapping_header {
   cursor: grab;
 }
 
-.mdmap_app_mappings .mdmap_app_mapping_header:active {
+.muldoon_mappings .muldoon_mapping_header:active {
   cursor: grabbing;
 }
 
-.mdmap_app_sort_placeholder {
+.muldoon_sort_placeholder {
   height: 52px;
   margin-bottom: 8px;
   border-radius: var(--mdm-radius);
@@ -363,23 +363,23 @@
 }
 
 /* ── Disabled mapping ───────────────────────────────────────────── */
-.mdmap_app_mapping_disabled {
+.muldoon_mapping_disabled {
   opacity: 0.55;
 }
 
-.mdmap_app_mapping_disabled .mdmap_app_mapping_header {
+.muldoon_mapping_disabled .muldoon_mapping_header {
   background: #f0f0f1;
 }
 
 /* ── Toggle row (enabled + health check) ────────────────────────── */
-.mdmap_app_toggle_row {
+.muldoon_toggle_row {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.mdmap_app_toggle_label {
+.muldoon_toggle_label {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -390,11 +390,11 @@
 }
 
 /* ── Health check button & result ───────────────────────────────── */
-.mdmap_app_health_btn {
+.muldoon_health_btn {
   margin-left: auto;
 }
 
-.mdmap_app_health_result {
+.muldoon_health_result {
   font-size: 11px;
   font-weight: 600;
   padding: 2px 8px;
@@ -402,36 +402,36 @@
   white-space: nowrap;
 }
 
-.mdmap_app_health_loading {
+.muldoon_health_loading {
   color: var(--mdm-muted);
   background: var(--mdm-bg);
 }
 
-.mdmap_app_health_ok {
+.muldoon_health_ok {
   color: #1a4730;
   background: #d1f5de;
 }
 
-.mdmap_app_health_fail {
+.muldoon_health_fail {
   color: #7a1a1a;
   background: var(--mdm-danger-bg);
 }
 
 /* ── Import / Export toolbar ────────────────────────────────────── */
-.mdmap_app_io_toolbar {
+.muldoon_io_toolbar {
   display: flex;
   align-items: center;
   gap: 8px;
   margin: 12px 0 4px;
 }
 
-.mdmap_app_io_toolbar .button {
+.muldoon_io_toolbar .button {
   cursor: pointer;
 }
 
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 782px) {
-  .mdmap_app_input_prefix {
+  .muldoon_input_prefix {
     font-size: 13px;
     padding: 7px 5px;
     line-height: 1.5;
@@ -439,15 +439,15 @@
 }
 
 @media (max-width: 699px) {
-  .mdmap_app_mapping_header {
+  .muldoon_mapping_header {
     flex-wrap: wrap;
   }
 
-  .mdmap_app_mapping_header > div:not(.mdmap_app_mapping_arrow) {
+  .muldoon_mapping_header > div:not(.muldoon_mapping_arrow) {
     flex: 1 1 100%;
   }
 
-  .mdmap_app_mapping_header > .mdmap_app_mapping_arrow {
+  .muldoon_mapping_header > .muldoon_mapping_arrow {
     flex: 0 0 100%;
     text-align: center;
     transform: rotate(90deg);
@@ -456,7 +456,7 @@
 }
 
 /* ── Footer easter egg ("Clever girl.") ─────────────────────────── */
-.mdmap_app_easter_egg {
+.muldoon_easter_egg {
   font-style: italic;
   color: #646970;
 }
